@@ -18,20 +18,18 @@ import {
   fetchArticles,
   setDate,
   setCategory,
-} from "../../store/slices/articlesSlice";
+} from "../../store/articles/articlesSlice";
 import { sources, categories, capitaLize } from "../../config/config";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function NavBar() {
   const dispatch = useDispatch();
-  // Get the current location object
+  
   const location = useLocation();
 
-  // Extract the pathname from the location object
   const currentPath = location.pathname;
 
-  console.log(currentPath);
   const isPagePersonalized = /\/personalized/.test(currentPath);
 
   const [searchInputValue, setSearchInputValue] = useState("");
@@ -52,7 +50,6 @@ function NavBar() {
     setSearchInputValue("");
   };
 
-  // Handle the selection of a new source
   const handleSelectSource = (eventKey) => {
     const selectedSource = sources.find((source) => source.key === eventKey);
     setSelected(selectedSource);

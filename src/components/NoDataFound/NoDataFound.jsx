@@ -7,7 +7,6 @@ function NoDataFound() {
 			<div className='search-icon'>
 				<IoSearchSharp />
 			</div>
-			
 			<span>No data found. Please search proper query</span>
 		</div>
 	)

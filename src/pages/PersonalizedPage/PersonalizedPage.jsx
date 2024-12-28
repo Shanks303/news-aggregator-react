@@ -10,7 +10,7 @@ import {
   setPreferredAuthors,
   setPreferredCategories,
   setPreferredSources,
-} from "../../store/slices/articlesSlice";
+} from "../../store/articles/articlesSlice";
 function PersonalizedPage() {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();

@@ -1,9 +1,9 @@
-import { Card } from "react-bootstrap";
+import { Button,Card } from "react-bootstrap";
+import { ArrowRight } from 'react-bootstrap-icons';
 import "./NewsCard.css"; 
 import { Details } from "../index";
-// import { ReactComponent as ArrowIcon } from '../../images/ArrowIcon.svg';
 
-function NewsCard({ imageUrl, alt, description, title, channel, published, author }) {
+function NewsCard({ imageUrl, alt, description, title, channel, published, author, urlNews }) {
   
   return (
     <Card className="card">
@@ -12,13 +12,13 @@ function NewsCard({ imageUrl, alt, description, title, channel, published, autho
         <Card.Title>{title}</Card.Title>
         <Card.Text className="card-description">{description?.substr(0, 150)}</Card.Text>
         <Details channel={channel} published={published} author={author} />
-        {/* <Button
+        <Button
           className="card-btn"
           href={urlNews}
           target="_blank"
         >
-          Read more <ArrowIcon className="arrow-icon" />
-        </Button> */}
+          Read more <ArrowRight />
+        </Button>
       </Card.Body>
     </Card>
   )
