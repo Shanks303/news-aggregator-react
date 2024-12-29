@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchNewsAPIArticles, fetchGuardianArticles, fetchNYTimesArticles  } from "../../config/api";
+
 export const fetchArticles = createAsyncThunk(
   "articles/fetchArticles",
   async (params, { getState }) => {
@@ -20,7 +21,7 @@ export const fetchArticles = createAsyncThunk(
         articles = [...articles, ...guardianArticles];
       }
   
-      // Fetch from NYT API
+      // Fetch from New York Times API
       if (source.key === 'ny-times' || source.key === 'all') {
         const nyTimesArticles = await fetchNYTimesArticles(query, params);
         articles = [...articles, ...nyTimesArticles];
@@ -37,7 +38,8 @@ const articlesSlice = createSlice({
     filters: {
       query: "",
       category: "",
-      date: "",
+      fromDate: "",
+      toDate: "",
       source: "",
       author: "",
       preferredSources: [],
@@ -54,6 +56,12 @@ const articlesSlice = createSlice({
     },
     setDate(state, action) {
       state.filters.date = action.payload;
+    },
+    setFromDate(state, action) {
+      state.filters.fromDate = action.payload;
+    },
+    setToDate(state, action) {
+      state.filters.toDate = action.payload;
     },
     setSource(state, action) {
       state.filters.source = action.payload;
@@ -90,7 +98,8 @@ const articlesSlice = createSlice({
 export const {
   setQuery,
   setCategory,
-  setDate,
+  setFromDate,
+  setToDate,
   setAuthor,
   setSource,
   setPreferredSources,

@@ -11,10 +11,11 @@ import {
   setPreferredCategories,
   setPreferredSources,
 } from "../../store/articles/articlesSlice";
+
+
 function PersonalizedPage() {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
-
   const { articles } = useSelector((state) => state.articles);
   const [selectedSources, setSelectedSources] = useState([]);
   const [selectedAuthors, setSelectedAuthors] = useState([]);
@@ -54,7 +55,6 @@ function PersonalizedPage() {
   const uniqueAuthors = [...new Set(articles.map((article) => article.author))];
   const uniqueCategories = [...new Set(articles.map((article) => article.category))];
 
-  // If all unique sources are selected, return all articles
   const filteredArticles =
     selectedSources.length === uniqueSources.length
       ? articles
@@ -70,10 +70,10 @@ function PersonalizedPage() {
   return (
     <>
       <div
-        className="mt-500"
-        style={{
+          className="mt-500"
+          style={{
           color: "#fff",
-          marginTop: "100px",
+          marginTop: "150px",
           padding: "20px",
           display: "flex",
           justifyContent: "center",
@@ -97,7 +97,7 @@ function PersonalizedPage() {
             <Form className="sources checkbox-container">
               {uniqueSources.map((source) => (
                 <div key={`default-${source}`} className="mb-3">
-                  <Form.Check // prettier-ignore
+                  <Form.Check 
                     type="checkbox"
                     id={`default-${source}`}
                     label={source}
@@ -129,7 +129,7 @@ function PersonalizedPage() {
             <Form className="categories checkbox-container">
               {uniqueCategories.map((category) => (
                 <div key={`default-${category}`} className="mb-3">
-                  <Form.Check // prettier-ignore
+                  <Form.Check 
                     type="checkbox"
                     id={`default-${category}`}
                     label={category}

@@ -8,8 +8,7 @@ import "./News.css";
 import NoDataFound from "../NoDataFound/NoDataFound";
 
 function News({ personalized, handleShowSidebar }) {
-  // const articles = generateMockArticles(20);
-  console.log(personalized);
+  
   const personalizedClass = personalized ? "personalized" : "";
 
   let { articles, status, filters } = useSelector((state) => state.articles);

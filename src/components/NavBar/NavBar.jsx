@@ -16,12 +16,15 @@ import {
   setQuery,
   setSource,
   fetchArticles,
-  setDate,
+  setFromDate,
+  setToDate,
   setCategory,
 } from "../../store/articles/articlesSlice";
 import { sources, categories, capitaLize } from "../../config/config";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import logoImage from '../../assests/images/logo.jpg';
+
 
 function NavBar() {
   const dispatch = useDispatch();
@@ -36,9 +39,12 @@ function NavBar() {
 
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [selected, setSelected] = useState(sources[0]);
-  const [startDate, setStartDate] = useState(
-    moment(new Date()).format("YYYY-MM-DD")
-  );
+  // const [startDate, setStartDate] = useState( moment(new Date()).format("YYYY-MM-DD"));
+  const [startDate, setStartDate] = useState(" ");
+
+  // const [endDate, setEndDate] = useState(moment(new Date()).format("YYYY-MM-DD")); //new
+  const [endDate, setEndDate] = useState(" "); //new
+
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
 
   const isSearchButtonDisabled = searchInputValue.trim() === "";
@@ -46,7 +52,7 @@ function NavBar() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setQuery(searchInputValue));
-    dispatch(fetchArticles({ query: searchInputValue, source: selected.key, date: startDate }));
+    dispatch(fetchArticles({ query: searchInputValue, source: selected.key, fromDate: startDate, toDate: endDate}));
     setSearchInputValue("");
   };
 
@@ -64,15 +70,22 @@ function NavBar() {
     dispatch(setCategory(selectedCategory));
   };
 
-  const handleDateChange = (date) => {
+  const handleFromDateChange = (date) => {
     const formattedDate = moment(date).format("YYYY-MM-DD");
     setStartDate(formattedDate);
-    dispatch(setDate(formattedDate));
+    dispatch(setFromDate(formattedDate));
+  };
+
+  const handleToDateChange = (date) => {
+    const formattedDate = moment(date).format("YYYY-MM-DD");
+    setEndDate(formattedDate);
+    dispatch(setToDate(formattedDate));
   };
 
   useEffect(() => {
     dispatch(setSource(selected));
-    dispatch(setDate(startDate));
+    dispatch(setFromDate(startDate));
+    dispatch(setToDate(endDate));
     dispatch(setCategory(selectedCategory));
     dispatch(
       fetchArticles({
@@ -80,6 +93,8 @@ function NavBar() {
         source: selected.key,
         category: selectedCategory,
         date: startDate,
+        fromDate: startDate,
+        toDate: endDate,
       })
     );
     dispatch(setQuery(''));
@@ -97,8 +112,7 @@ function NavBar() {
       <Navbar.Brand className="nav-brand" href="/">
         <img
           src={
-            "https://seeklogo.com/images/S/svg-logo-A7D0801A11-seeklogo.com.png"
-          }
+            logoImage}
           alt="Logo"
           className="logo"
         />
@@ -140,8 +154,8 @@ function NavBar() {
             </Nav.Link>
             <NavDropdown
               id="dropdown-basic-button"
-              title={capitaLize(selectedCategory)} // Display the selected source's name
-              onSelect={handleSelectCategory} // Handle the selection event
+              title={capitaLize(selectedCategory)} 
+              onSelect={handleSelectCategory} 
             >
               {categories.map((element, index) => (
                 <NavDropdown.Item key={index} eventKey={element}>
@@ -152,8 +166,8 @@ function NavBar() {
 
             <NavDropdown
               id="dropdown-basic-button"
-              title={selected.name} // Display the selected source's name
-              onSelect={handleSelectSource} // Handle the selection event
+              title={selected.name} 
+              onSelect={handleSelectSource} 
             >
               {sources.map((element, index) => (
                 <NavDropdown.Item key={index} eventKey={element.key}>
@@ -163,7 +177,10 @@ function NavBar() {
             </NavDropdown>
           </Nav>
           <div className="date-picker">
-            <DatePicker selected={startDate} onChange={handleDateChange} />
+            <DatePicker placeholderText={'From Date'} selected={startDate===" "? null : startDate} onChange={handleFromDateChange}  />
+          </div>
+          <div className="date-picker">
+            <DatePicker placeholderText={'End Date'} selected={endDate===" "? null : endDate} onChange={handleToDateChange}  />
           </div>
           <Form className="search-form" onSubmit={handleSubmit}>
             <FormControl

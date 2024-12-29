@@ -26,13 +26,14 @@ const normalizeArticles = (articles, source) => {
     publishedAt: article.publishedAt || article.webPublicationDate || article.pub_date,
     author: article?.author || article?.fields?.byline || article?.byline?.original || 'Unknown Author',
     category: article?.category || article?.sectionName || 'General',
-    imgSrc: article?.urlToImage || article.image || newsImage,
+    imgSrc: article?.fields?.thumbnail || article?.urlToImage || article.image ||(article.multimedia && article.multimedia.length > 0
+    ? `https://www.nytimes.com/${article.multimedia[0].url}`: newsImage) || newsImage,
   }));
 };
 
 // Fetch NewsAPI articles
 export const fetchNewsAPIArticles = async (query, filters) => {
-  const searchUrl = `https://newsapi.org/v2/everything?q=${query}&from=${filters.date}`;
+  const searchUrl = `https://newsapi.org/v2/everything?q=${query}&from=${filters.fromDate}&to=${filters.toDate}`;
   const topHeadUrl = `https://newsapi.org/v2/top-headlines?country=us&category=${filters.category}`;
   const categoryUrl = `https://newsapi.org/v2/top-headlines?country=us&category=${filters.category}`
 
@@ -48,8 +49,8 @@ export const fetchNewsAPIArticles = async (query, filters) => {
 // Fetch The Guardian articles
 export const fetchGuardianArticles = async (query, filters) => {
   const searchUrl = `https://content.guardianapis.com/search`;
-  const searchWithDateUrl = `https://content.guardianapis.com?from-date=${filters.date}`;
-  const url = (query || filters.category) ? searchUrl : (filters.date) ? searchWithDateUrl : searchUrl;
+  const searchWithDateUrl = `https://content.guardianapis.com?from-date=${filters.fromDate}&to-date=${filters.toDate}`;
+  const url = (query || filters.category) ? searchUrl : (filters.fromDate) ? searchWithDateUrl : searchUrl;
 
   const params = {
     q: query || filters.category,
@@ -66,11 +67,12 @@ export const fetchNYTimesArticles = async (query, filters) => {
   const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json`;
   const params = {
     fq: query,
-    from: filters.date,
     'api-key': BBC_API_KEY,
     category: filters.category,
+    begin_date: filters.fromDate,
+    end_date: filters.toDate,
   };
 
   const data = await makeApiRequest(url, params);
-  return data ? normalizeArticles(data.response.docs, 'BBC News') : [];
+  return data ? normalizeArticles(data.response.docs, 'The New York Times') : [];
 };
