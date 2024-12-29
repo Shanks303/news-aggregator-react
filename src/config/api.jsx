@@ -1,5 +1,5 @@
 import axios from 'axios';
-import newsImage from '../images/newsImage.jpg';
+import newsImage from '../assests/images/defaultnewsImage.jpg';
 
 const NEWS_API_KEY = import.meta.env.VITE_NEWSAPI_KEY;
 const GUARDIAN_API_KEY = import.meta.env.VITE_GUARDIAN_KEY;
