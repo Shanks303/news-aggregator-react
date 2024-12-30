@@ -1,4 +1,4 @@
-# React-News-App - [![Netlify Status](https://vite-react-news-app.netlify.app/)]
+# React-News-App - [[Netlify Link](https://vite-react-news-app.netlify.app/)]
 
 ### Overview
 
