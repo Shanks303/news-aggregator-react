@@ -39,11 +39,10 @@ function NavBar() {
 
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [selected, setSelected] = useState(sources[0]);
-  // const [startDate, setStartDate] = useState( moment(new Date()).format("YYYY-MM-DD"));
+
   const [startDate, setStartDate] = useState(" ");
 
-  // const [endDate, setEndDate] = useState(moment(new Date()).format("YYYY-MM-DD")); //new
-  const [endDate, setEndDate] = useState(" "); //new
+  const [endDate, setEndDate] = useState(" "); 
 
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
 
@@ -110,12 +109,7 @@ function NavBar() {
       expanded={!isCollapsed}
     >
       <Navbar.Brand className="nav-brand" href="/">
-        <img
-          src={
-            logoImage}
-          alt="Logo"
-          className="logo"
-        />
+        <img src={logoImage} alt="Logo" className="logo" />
       </Navbar.Brand>
       {isCollapsed && (
         <Navbar.Toggle
@@ -154,8 +148,8 @@ function NavBar() {
             </Nav.Link>
             <NavDropdown
               id="dropdown-basic-button"
-              title={capitaLize(selectedCategory)} 
-              onSelect={handleSelectCategory} 
+              title={capitaLize(selectedCategory)}
+              onSelect={handleSelectCategory}
             >
               {categories.map((element, index) => (
                 <NavDropdown.Item key={index} eventKey={element}>
@@ -166,8 +160,8 @@ function NavBar() {
 
             <NavDropdown
               id="dropdown-basic-button"
-              title={selected.name} 
-              onSelect={handleSelectSource} 
+              title={selected.name}
+              onSelect={handleSelectSource}
             >
               {sources.map((element, index) => (
                 <NavDropdown.Item key={index} eventKey={element.key}>
@@ -177,12 +171,20 @@ function NavBar() {
             </NavDropdown>
           </Nav>
           <div className="date-picker">
-            <DatePicker placeholderText={'From Date'} selected={startDate===" "? null : startDate} onChange={handleFromDateChange}  />
+            <DatePicker
+              placeholderText={"From"}
+              selected={startDate === " " ? null : startDate}
+              onChange={handleFromDateChange}
+            />
           </div>
           <div className="date-picker">
-            <DatePicker placeholderText={'End Date'} selected={endDate===" "? null : endDate} onChange={handleToDateChange}  />
+            <DatePicker
+              placeholderText={"To"}
+              selected={endDate === " " ? null : endDate}
+              onChange={handleToDateChange}
+            />
           </div>
-          <Form className="search-form" onSubmit={handleSubmit}>
+          <Form className="search-form" onSubmit={handleSubmit} name="searchForm">
             <FormControl
               type="text"
               value={searchInputValue}

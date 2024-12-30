@@ -3,7 +3,7 @@ import newsImage from '../assests/images/defaultnewsImage.jpg';
 
 const NEWS_API_KEY = import.meta.env.VITE_NEWSAPI_KEY;
 const GUARDIAN_API_KEY = import.meta.env.VITE_GUARDIAN_KEY;
-const BBC_API_KEY = import.meta.env.VITE_NYT_KEY;
+const NYT_API_KEY = import.meta.env.VITE_NYT_KEY;
 
 // Helper function to make API requests
 const makeApiRequest = async (url, params) => {
@@ -64,13 +64,13 @@ export const fetchGuardianArticles = async (query, filters) => {
 
 // Fetch NewYork News articles
 export const fetchNYTimesArticles = async (query, filters) => {
-  const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json`;
+  const searchUrl = `https://api.nytimes.com/svc/search/v2/articlesearch.json`;
+  const searchWithDateUrl = `https://api.nytimes.com/svc/search/v2/articlesearch.json?begin_date=${filters.fromDate}&end_date=${filters.toDate}`;
+  const url = (query || filters.category) ? searchUrl : (filters.fromDate) ? searchWithDateUrl : searchUrl;
   const params = {
     fq: query,
-    'api-key': BBC_API_KEY,
+    'api-key': NYT_API_KEY,
     category: filters.category,
-    begin_date: filters.fromDate,
-    end_date: filters.toDate,
   };
 
   const data = await makeApiRequest(url, params);
