@@ -16,7 +16,7 @@ The application uses the following data sources:
 NewsAPI , The Guardian API, New York Times API 
 
 ### Technologies Used
-- Vite: 
+- Vite: a JavaScript build tool for faster and more efficient way to create react app.
 - React.js: A JavaScript library for building user interfaces.
 - Redux Toolkit: For state management.
 - Axios: For making HTTP requests to fetch data from APIs.
@@ -81,10 +81,6 @@ The Dockerfile defines the steps to build the Docker image for the application.
 	Open your web browser and go to http://localhost/5173: to see the application running.
 
 6. Stopping the Container:
-
-	If you started the container with Docker Compose, stop it using:
-	
-	`docker-compose down`
 
 	If you started the container directly, find the container ID with:
 	
