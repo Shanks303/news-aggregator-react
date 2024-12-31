@@ -76,13 +76,14 @@ The Dockerfile defines the steps to build the Docker image for the application.
 	`docker build -t react-news-app .` . 
 
 3. Run the Docker Container: To start a container from your image, run:
-	`docker run --rm -p 5173:5173 react-news-app`
+	
+ 	`docker run --rm -p 5173:5173 react-news-app`
 
-5. Access the Application:
+4. Access the Application:
 
 	Open your web browser and go to http://localhost/5173: to see the application running.
 
-6. Stopping the Container:
+5. Stopping the Container:
 
 	If you started the container directly, find the container ID with:
 	
