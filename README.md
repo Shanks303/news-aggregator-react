@@ -6,14 +6,14 @@ This project is a news aggregator website built with React.js. The application p
 
 ### Features
 
-1. Article Search and Filtering
+1. Article Search and Filtering:
 Users can search for articles by entering keywords.
 Filtering options are available by date, category, and source.
-2. Personalized News Feed
+2. Personalized News Feed:
 Users can customize their news feed by selecting preferred sources, categories, and authors.
-3. Mobile-Responsive Design
+3. Mobile-Responsive Design:
 The website is optimized for both desktop and mobile devices.
-4. Data Sources
+4. Data Sources:
 The application uses the following data sources:
 NewsAPI , The Guardian API, New York Times API 
 
