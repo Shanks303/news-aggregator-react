@@ -23,10 +23,6 @@ export const sources = [
   {
     name: "New York Times API",
     key: "ny-times",
-  },
-  {
-    name: "GNews Api",
-    key: "gnews-api",
   }
 ];
 
