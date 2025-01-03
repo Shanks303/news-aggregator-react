@@ -40,13 +40,13 @@ function NavBar() {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [selected, setSelected] = useState(sources[0]);
 
-  const [startDate, setStartDate] = useState(" ");
+  const [startDate, setStartDate] = useState("");
 
-  const [endDate, setEndDate] = useState(" "); 
+  const [endDate, setEndDate] = useState(""); 
 
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
 
-  const isSearchButtonDisabled = searchInputValue.trim() === "";
+  // const isSearchButtonDisabled = searchInputValue.trim() === "";
   console.log(selected);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -173,15 +173,17 @@ function NavBar() {
           <div className="date-picker">
             <DatePicker
               placeholderText={"From"}
-              selected={startDate === " " ? null : startDate}
+              selected={startDate === "" ? null : startDate}
               onChange={handleFromDateChange}
+              dateFormat={"dd-MM-YYYY"}
             />
           </div>
           <div className="date-picker">
             <DatePicker
               placeholderText={"To"}
-              selected={endDate === " " ? null : endDate}
+              selected={endDate === "" ? null : endDate}
               onChange={handleToDateChange}
+              dateFormat={"dd-MM-YYYY"}
             />
           </div>
           <Form className="search-form" onSubmit={handleSubmit} name="searchForm">
@@ -195,7 +197,7 @@ function NavBar() {
             <Button
               onClick={handleSubmit}
               className="search-btn mt-lg-2 ml-2 mt-md-2 mt-sm-2 mt-xl-0"
-              disabled={isSearchButtonDisabled}
+              // disabled={isSearchButtonDisabled}
             >
               Search
             </Button>

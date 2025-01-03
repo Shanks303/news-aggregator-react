@@ -5,6 +5,9 @@ const NEWS_API_KEY = import.meta.env.VITE_NEWSAPI_KEY;
 const GUARDIAN_API_KEY = import.meta.env.VITE_GUARDIAN_KEY;
 const NYT_API_KEY = import.meta.env.VITE_NYT_KEY;
 
+const defaultFromDate = `2024-01-01`;
+const defaultToDate = `2024-12-31`;
+
 // Helper function to make API requests
 const makeApiRequest = async (url, params) => {
   try {
@@ -26,53 +29,57 @@ const normalizeArticles = (articles, source) => {
     publishedAt: article.publishedAt || article.webPublicationDate || article.pub_date,
     author: article?.author || article?.fields?.byline || article?.byline?.original || 'Unknown Author',
     category: article?.category || article?.sectionName || 'General',
-    imgSrc: article?.fields?.thumbnail || article?.urlToImage || article.image ||(article.multimedia && article.multimedia.length > 0
-    ? `https://www.nytimes.com/${article.multimedia[0].url}`: newsImage) || newsImage,
+    imgSrc: article?.fields?.thumbnail || article?.urlToImage || article.image ||(article.multimedia && article.multimedia.length > 0? `https://www.nytimes.com/${article.multimedia[0].url}`: newsImage) || newsImage,
   }));
 };
 
+
 // Fetch NewsAPI articles
 export const fetchNewsAPIArticles = async (query, filters) => {
-  const searchUrl = `https://newsapi.org/v2/everything?q=${query}&from=${filters.fromDate}&to=${filters.toDate}`;
-  const topHeadUrl = `https://newsapi.org/v2/top-headlines?country=us&category=${filters.category}`;
-  const categoryUrl = `https://newsapi.org/v2/top-headlines?country=us&category=${filters.category}`
 
-  const url = (query ) ? searchUrl : (filters.category) ? categoryUrl : topHeadUrl;
+  const baseUrl = `https://newsapi.org/v2`;
+  const searchUrl = `${baseUrl}/everything?from=${filters.fromDate}&to=${filters.toDate}`;
+  const categoryUrl = `${baseUrl}/top-headlines?country=us&category=${filters.category}`
+
+  const url = (query ) ? searchUrl : categoryUrl;
   const params = {
     apiKey: NEWS_API_KEY,
+    q: query,
+    pageSize: 10,
   };
   
   const data = await makeApiRequest(url, params);
   return data ? normalizeArticles(data.articles, 'NewsAPI') : [];
 };
 
-// Fetch The Guardian articles
 export const fetchGuardianArticles = async (query, filters) => {
-  const searchUrl = `https://content.guardianapis.com/search`;
-  const searchWithDateUrl = `https://content.guardianapis.com?from-date=${filters.fromDate}&to-date=${filters.toDate}`;
-  const url = (query || filters.category) ? searchUrl : (filters.fromDate) ? searchWithDateUrl : searchUrl;
+  const url = `https://content.guardianapis.com/search`;
 
+  // Build query parameters dynamically
   const params = {
-    q: query || filters.category,
+    q: query || filters?.category || "", 
+    'from-date': filters?.fromDate || defaultFromDate, 
+    'to-date': filters?.toDate || defaultToDate, 
     'api-key': GUARDIAN_API_KEY,
-    'show-fields': 'all',
+    'show-fields': 'all', 
   };
 
   const data = await makeApiRequest(url, params);
   return data ? normalizeArticles(data.response.results, 'The Guardian') : [];
 };
 
-// Fetch NewYork News articles
+
 export const fetchNYTimesArticles = async (query, filters) => {
-  const searchUrl = `https://api.nytimes.com/svc/search/v2/articlesearch.json`;
-  const searchWithDateUrl = `https://api.nytimes.com/svc/search/v2/articlesearch.json?begin_date=${filters.fromDate}&end_date=${filters.toDate}`;
-  const url = (query || filters.category) ? searchUrl : (filters.fromDate) ? searchWithDateUrl : searchUrl;
+  const baseUrl = `https://api.nytimes.com/svc/search/v2/articlesearch.json`;
+
+  // Build query parameters dynamically
   const params = {
-    fq: query,
     'api-key': NYT_API_KEY,
-    category: filters.category,
+    fq: query ? query : filters?.category ? `news_desk:(${filters.category})` : "",
+    begin_date: filters?.fromDate || defaultFromDate, 
+    end_date: filters?.toDate || defaultToDate, 
   };
 
-  const data = await makeApiRequest(url, params);
+  const data = await makeApiRequest(baseUrl, params);
   return data ? normalizeArticles(data.response.docs, 'The New York Times') : [];
 };
