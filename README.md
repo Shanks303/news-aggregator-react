@@ -6,14 +6,14 @@ This project is a news aggregator website built with React.js. The application p
 
 ### Features
 
-1. Article Search and Filtering
+1. Article Search and Filtering:
 Users can search for articles by entering keywords.
 Filtering options are available by date, category, and source.
-2. Personalized News Feed
+2. Personalized News Feed:
 Users can customize their news feed by selecting preferred sources, categories, and authors.
-3. Mobile-Responsive Design
+3. Mobile-Responsive Design:
 The website is optimized for both desktop and mobile devices.
-4. Data Sources
+4. Data Sources:
 The application uses the following data sources:
 NewsAPI , The Guardian API, New York Times API 
 
@@ -76,13 +76,14 @@ The Dockerfile defines the steps to build the Docker image for the application.
 	`docker build -t react-news-app .` . 
 
 3. Run the Docker Container: To start a container from your image, run:
-	`docker run --rm -p 5173:5173 react-news-app`
+	
+ 	`docker run --rm -p 5173:5173 react-news-app`
 
-5. Access the Application:
+4. Access the Application:
 
 	Open your web browser and go to http://localhost/5173: to see the application running.
 
-6. Stopping the Container:
+5. Stopping the Container:
 
 	If you started the container directly, find the container ID with:
 	
