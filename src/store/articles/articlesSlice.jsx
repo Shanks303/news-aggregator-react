@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchNewsAPIArticles, fetchGuardianArticles, fetchNYTimesArticles  } from "../../config/api";
+import { fetchNewsAPIArticles, fetchGuardianArticles, fetchNYTimesArticles,fetchWorldNewsArticles  } from "../../config/api";
 
 export const fetchArticles = createAsyncThunk(
   "articles/fetchArticles",
@@ -26,6 +26,13 @@ export const fetchArticles = createAsyncThunk(
         const nyTimesArticles = await fetchNYTimesArticles(query, params);
         articles = [...articles, ...nyTimesArticles];
       }
+
+      // Fetch from World News API
+      if (source.key === 'world-news-api' || source.key === 'all') {
+        const worldNewsArticles = await fetchWorldNewsArticles(query, params);
+        articles = [...articles, ...worldNewsArticles];
+      }
+
       return articles;
   }
 );

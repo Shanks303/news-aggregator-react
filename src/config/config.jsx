@@ -23,7 +23,11 @@ export const sources = [
   {
     name: "New York Times API",
     key: "ny-times",
-  }
+  },
+  {
+    name: "World News API",
+    key: "world-news-api",
+  },
 ];
 
 export const categories = ['general', 'business', 'entertainment', 'health', 'science', 'sports', 'technology'];
