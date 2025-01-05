@@ -101,15 +101,30 @@ The Dockerfile(.dockerfile) defines the steps to build the Docker image for the 
 
 1. Create a AWS EC2 Linux Instance and connect through ssh in powershell or bash shell.
 2. Install git and docker in the linux server.
+
 	`sudo yum install git -y` and `sudo yum install -y docker`
-3. Create a new directory and clone the repository using `git clone <repository_url>`.
+
+3. Create a new directory and clone the repository.
+
+	`git clone <repository_url>`
+
 4. Start the docker container if not already started, and check the status.
+
 	`sudo systemctl start docker`
 	`sudo systemctl status docker`
+
 5. Create a docker image from Dockerfile for the project.
+
 	`sudo docker build -t <image_name> .`
-6. Note down the docker image_id using command `sudo docker images`
+
+6. Note down the docker image_id using command.
+
+	`sudo docker images`
+
 7. Run the docker container using image_id.
+
 	`sudo docker run --rm -p 80:5173 <image_id or image_name>`
-8. Copy the public Ipv4 address from the ec2 instance and run in the browser.
+
+8. Copy the public Ipv4 address of the ec2 instance and run in the browser.
+
 	`<publicIP>:5173`
