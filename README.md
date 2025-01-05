@@ -15,7 +15,7 @@ Users can customize their news feed by selecting preferred sources, categories, 
 The website is optimized for both desktop and mobile devices.
 4. Data Sources:
 The application uses the following data sources:
-NewsAPI , The Guardian API, New York Times API 
+NewsAPI , The Guardian API, New York Times API and World News API
 
 ### Technologies Used
 - Vite: a JavaScript build tool for faster and more efficient way to create react app.
@@ -38,7 +38,7 @@ NewsAPI , The Guardian API, New York Times API
 - Responsive Layout: The UI components are designed using React Bootstrap, ensuring the layout adjusts for different screen sizes. Media queries are used for custom styling on mobile devices.
 
 4. API Integration
-- api.js contains four different data sources newsAPI, guardianAPI, nytAPI: These service file handle API requests to the respective data sources. It contains functions to fetch data, and convert all the data into normalize data which are used in Redux actions and components.
+- api.js contains four different data sources newsAPI, guardianAPI, nytAPI, worldnewsAPI: These service file handle API requests to the respective data sources. It contains functions to fetch data, and convert all the data into normalize data which are used in Redux actions and components.
 
 5. State Management
 - Redux Toolkit: Used to manage the state of the application, including articles fetched, user preferences, and filter criteria. Redux slices (articlesSlice.jsx) are created to handle specific aspects of the state.
@@ -46,7 +46,7 @@ NewsAPI , The Guardian API, New York Times API
 ## Dockerization
 ### Dockerfile
 
-The Dockerfile defines the steps to build the Docker image for the application.
+The Dockerfile(.dockerfile) defines the steps to build the Docker image for the application. Create '.dockerfile' inside the root folder
 
 ### Use an official Node.js runtime as a parent image
 `FROM node:22-alpine`
@@ -71,13 +71,17 @@ The Dockerfile defines the steps to build the Docker image for the application.
 
 ## Build and Run the Docker Container
 
-1. Build the Docker Image: Open a terminal in the root directory of your project and run:
+1. Build the Docker Image: Open a terminal in the root directory of your project and run;
 
-	`docker build -t react-news-app .` . 
+	`docker build -t <image_name> .`
+
+2. Check the docker image is created and note the image id.
+
+	`docker images`
 
 3. Run the Docker Container: To start a container from your image, run:
 	
- 	`docker run --rm -p 5173:5173 react-news-app`
+ 	`docker run --rm -p 5173:5173 <image_id or image_name>`
 
 4. Access the Application:
 
@@ -92,3 +96,20 @@ The Dockerfile defines the steps to build the Docker image for the application.
 	Then stop it with:
 
 	`docker stop <container_id>`
+
+## Run in AWS Cloud(EC2)
+
+1. Create a AWS EC2 Linux Instance and connect through ssh in powershell or bash shell.
+2. Install git and docker in the linux server.
+	`sudo yum install git -y` and `sudo yum install -y docker`
+3. Create a new directory and clone the repository using `git clone <repository_url>`.
+4. Start the docker container if not already started, and check the status.
+	`sudo systemctl start docker`
+	`sudo systemctl status docker`
+5. Create a docker image from Dockerfile for the project.
+	`sudo docker build -t <image_name> .`
+6. Note down the docker image_id using command `sudo docker images`
+7. Run the docker container using image_id.
+	`sudo docker run --rm -p 80:5173 <image_id or image_name>`
+8. Copy the public Ipv4 address from the ec2 instance and run in the browser.
+	`<publicIP>:5173`
