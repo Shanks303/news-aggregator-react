@@ -18,7 +18,7 @@ The application uses the following data sources:
 NewsAPI , The Guardian API, New York Times API and World News API
 
 ### Technologies Used
-- Vite: a JavaScript build tool for faster and more efficient way to create react app.
+- Vite: A JavaScript build tool for faster and more efficient way to create react app.
 - React.js: A JavaScript library for building user interfaces.
 - Redux Toolkit: For state management.
 - Axios: For making HTTP requests to fetch data from APIs.
